@@ -21,6 +21,7 @@
 *.pem
 package-lock.json
 TODO
+db_struct.sql
 
 # debug
 npm-debug.log*
