@@ -10,3 +10,50 @@
 input[type="checkbox"] {
   accent-color: gray;
 }
+
+/* item */
+.flex.flex-row-reverse {
+  overflow: auto;
+}
+
+/* item-child */
+.relative.mb-\[10px\].mt-\[10px\].flex.items-start.justify-end::before {
+  content: "";
+  position: absolute;
+  background-color: #fff;
+  right: 0;
+  top: 50%;
+  transform: translateX(100%);
+  width: 25px;
+  height: 2px;
+}
+
+.relative.mb-\[10px\].mt-\[10px\].flex.items-start.justify-end::after {
+  content: "";
+  position: absolute;
+  background-color: #fff;
+  right: calc(-50px / 2);
+  height: calc(50% + 20px);
+  width: 2px;
+  top: 50%;
+}
+
+.relative.mb-\[10px\].mt-\[10px\].flex.items-start.justify-end:last-child::after {
+  transform: translateY(-100%);
+}
+
+.relative.mb-\[10px\].mt-\[10px\].flex.items-start.justify-end:only-child::after {
+  display: none;
+}
+
+/* item-parent */
+.relative.ml-\[50px\].flex.items-center::after {
+  position: absolute;
+  content: "";
+  width: calc(50px / 2);
+  height: 2px;
+  left: 0;
+  top: 50%;
+  background-color: #fff;
+  transform: translateX(-100%);
+}
