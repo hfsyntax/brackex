@@ -46,7 +46,7 @@ export default function ProfileDropdown() {
         ref={currentDropdown}
       >
         <a
-          href="/dashboard"
+          href="/dashboard/tournaments"
           className="ml-3 block w-fit text-gray-500 hover:text-white"
         >
           Dashboard
