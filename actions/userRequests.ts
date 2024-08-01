@@ -83,6 +83,13 @@ export async function createTournament(
         error: "invalid start time",
       }
     }
+
+    const urlExists = await sql`SELECT 1 from ta_tournaments where url = ${url}`
+    if (urlExists.rowCount && urlExists.rowCount > 0) {
+      revalidatePath("/tournaments/new")
+      return { error: "tournament url already exists" }
+    }
+
     const queryResult = await sql`
     INSERT INTO ta_tournaments (name, type, created_at, updated_at, game, url, description, host) 
     VALUES (${name}, ${tournamentType}, ${new Date().toISOString()}, ${new Date().toISOString()}, ${game}, ${url}, ${description}, ${session?.user?.authID} )`
