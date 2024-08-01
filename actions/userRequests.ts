@@ -1,6 +1,7 @@
 "use server"
 import { getSession } from "@/lib/session"
 import { revalidatePath } from "next/cache"
+import { sql } from "@vercel/postgres"
 
 export type FormResult =
   | {
@@ -73,12 +74,18 @@ export async function createTournament(
       }
     }
     const startTime = new Date(String(formData.get("time")))
-    if (startTime instanceof Date && !isNaN(startTime.getTime())) {
+    if (
+      !(startTime instanceof Date) ||
+      (startTime instanceof Date && isNaN(startTime.getTime()))
+    ) {
       revalidatePath("/tournaments/new")
       return {
         error: "invalid start time",
       }
     }
+    const queryResult = await sql`
+    INSERT INTO ta_tournaments (name, type, created_at, updated_at, game, url, description, host) 
+    VALUES (${name}, ${tournamentType}, ${new Date().toISOString()}, ${new Date().toISOString()}, ${game}, ${url}, ${description}, ${session?.user?.authID} )`
     return { success: "success" }
   }
 }

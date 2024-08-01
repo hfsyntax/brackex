@@ -65,7 +65,10 @@ export default function Tournament() {
       })
     }
     const startTime = new Date(String(formData.get("time")))
-    if (startTime instanceof Date && !isNaN(startTime.getTime())) {
+    if (
+      !(startTime instanceof Date) ||
+      (startTime instanceof Date && isNaN(startTime.getTime()))
+    ) {
       return setFormState({
         ...formState,
         error: "invalid start time",
