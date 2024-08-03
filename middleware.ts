@@ -11,7 +11,7 @@ export async function middleware(request: NextRequest) {
   const response = await updateSession(request)
   const session = await getSession()
   if (session && request.nextUrl.pathname === "/") {
-    return NextResponse.redirect(new URL("/dashboard", request.url))
+    return NextResponse.redirect(new URL("/dashboard/tournaments", request.url))
   } else if (
     !session &&
     ["/profile", "/dashboard/tournaments", "/dashboard/communities"].includes(

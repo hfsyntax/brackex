@@ -1,6 +1,11 @@
+import { getTournamentHost } from "@/actions/serverRequests"
 import Sidebar from "@/components/Sidebar"
-export default function ReportScores() {
-  return (
+import { getSession } from "@/lib/session"
+export default async function ReportScores({ params }: { params: any }) {
+  const session = await getSession()
+  const username = session?.user?.username
+  const tournamentHost = await getTournamentHost(params?.id)
+  return tournamentHost === username ? (
     <>
       <Sidebar
         items={[
@@ -13,5 +18,7 @@ export default function ReportScores() {
         ]}
       />
     </>
+  ) : (
+    <span className="text-white">401 Unauthorized</span>
   )
 }
