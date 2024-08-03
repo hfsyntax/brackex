@@ -60,6 +60,7 @@ export async function login(prevState: any, formData: FormData) {
   const recaptchaValidated = await validateRecaptcha(recaptchaResponse)
 
   if (!recaptchaValidated) {
+    revalidatePath("/")
     return { error: "reCAPTCHA validation failed" }
   }
 
@@ -81,6 +82,7 @@ export async function login(prevState: any, formData: FormData) {
         }
         const session = await encrypt({ user })
         cookies().set("session", session, { httpOnly: true })
+        revalidatePath("/")
         return redirect("/dashboard/tournaments")
       } else {
         revalidatePath("/")
