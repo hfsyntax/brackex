@@ -20,3 +20,14 @@ export async function getTournamentHost(url: string): Promise<string> {
     where url = ${url}`
   return queryResult.rowCount === 1 ? queryResult?.rows?.[0]?.host : null
 }
+
+export async function getUserTournaments(user: string) {
+  const queryResult = await sql`
+  SELECT t.url, t.name, t.type, t.game, t.created_at, COUNT(tp.id) FROM ta_tournaments t
+  JOIN ta_auth ta ON host = ta.auth_id
+  LEFT JOIN ta_participants tp ON t.id = tp.tournament_id
+  WHERE ta.username = ${user}
+  GROUP BY t.url, t.name, t.type, t.game, t.created_at
+  `
+  return queryResult.rows
+}

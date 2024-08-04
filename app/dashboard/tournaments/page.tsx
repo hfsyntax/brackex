@@ -1,11 +1,19 @@
+import { getUserTournaments } from "@/actions/serverRequests"
+import { getSession } from "@/lib/session"
 import Link from "next/link"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faUsers } from "@fortawesome/free-solid-svg-icons"
 
 export const metadata = {
   title: "Brackex - Dashboard",
   description: "User dashboard for Brackex",
 }
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const session = await getSession()
+  const username = session?.user?.username
+  const userTournaments = await getUserTournaments(username)
+  console.log(userTournaments)
   return (
     <div className="flex">
       <div className="ml-3 mt-5 h-fit w-fit border-r-2 pb-3 pt-3">
@@ -48,6 +56,30 @@ export default function Dashboard() {
           <span className="mb-3 block cursor-pointer pl-2 text-white hover:bg-gray-700">
             complete
           </span>
+        </div>
+        <div className="flex w-[70%] flex-wrap">
+          {userTournaments.map((tournament, index) => (
+            <Link
+              href={`/tournaments/${tournament?.url}`}
+              className="mt-3 flex w-full items-center bg-slate-700 text-white hover:bg-slate-600"
+              key={index}
+            >
+              <div className="m-3 h-[50px] w-[50px] bg-white"></div>
+              <div className="grow">
+                <span className="inline-block pl-3">{tournament?.name}</span>
+
+                <span className="float-right mr-3 inline-block">
+                  {new Date(tournament?.created_at).toLocaleDateString()}
+                </span>
+                <span className="float-right mr-3">
+                  <FontAwesomeIcon icon={faUsers} /> {tournament?.count}
+                </span>
+                <span className="block pl-3 text-gray-400">
+                  {tournament?.type} tournament for {tournament?.game}
+                </span>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </div>
