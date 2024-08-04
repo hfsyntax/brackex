@@ -1,6 +1,12 @@
 import { getTournamentByURL } from "@/actions/serverRequests"
 import Sidebar from "@/components/Sidebar"
 import { getSession } from "@/lib/session"
+
+export const metadata = {
+  title: "Brackex - Tournament",
+  description: "default page for a tournament",
+}
+
 export default async function TournamentID({ params }: { params: any }) {
   const tournament = await getTournamentByURL(params.id)
   const session = await getSession()

@@ -1,6 +1,12 @@
 import { getTournamentHost } from "@/actions/serverRequests"
 import Sidebar from "@/components/Sidebar"
 import { getSession } from "@/lib/session"
+
+export const metadata = {
+  title: "Brackex - Tournament Participants",
+  description: "Paticipants page for a tournament",
+}
+
 export default async function TournamentParticipants({
   params,
 }: {

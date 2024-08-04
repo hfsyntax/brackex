@@ -1,7 +1,7 @@
 import Link from "next/link"
 
 export const metadata = {
-  title: "Brackex - Communities",
+  title: "Brackex - Your Communities",
   description: "User Communities in Brackex",
 }
 

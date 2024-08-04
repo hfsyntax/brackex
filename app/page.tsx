@@ -1,5 +1,4 @@
 import Login from "@/components/Login"
-import { title } from "process"
 
 export const metadata = {
   title: "Brackex - Login",

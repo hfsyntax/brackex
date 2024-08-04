@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUsers } from "@fortawesome/free-solid-svg-icons"
 
 export const metadata = {
-  title: "Brackex - Dashboard",
-  description: "User dashboard for Brackex",
+  title: "Brackex - Your Tournaments",
+  description: "User tournaments for Brackex",
 }
 
 export default async function Dashboard() {

@@ -1,6 +1,12 @@
 import Sidebar from "@/components/Sidebar"
 import { getSession } from "@/lib/session"
 import { getTournamentHost } from "@/actions/serverRequests"
+
+export const metadata = {
+  title: "Brackex - User Settings",
+  description: "User settings page for brackex",
+}
+
 export default async function TournamentSettings({ params }: { params: any }) {
   const session = await getSession()
   const username = session?.user?.username

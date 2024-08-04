@@ -58,7 +58,7 @@ export default function ProfileDropdown() {
           Profile
         </a>
         <a
-          href="#"
+          href="/profile/settings"
           className="ml-3 mt-1 block w-fit text-gray-500 hover:text-white"
         >
           Settings
