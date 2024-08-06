@@ -1,7 +1,9 @@
 "use server"
 
 import { sql } from "@vercel/postgres"
+import { getSession } from "@/lib/session"
 import type { QueryResultRow } from "@vercel/postgres"
+
 export async function getTournamentByURL(
   url: string,
 ): Promise<QueryResultRow | null> {
@@ -21,7 +23,9 @@ export async function getTournamentHost(url: string): Promise<string> {
   return queryResult.rowCount === 1 ? queryResult?.rows?.[0]?.host : null
 }
 
-export async function getUserTournaments(user: string) {
+export async function getUserTournaments(
+  user: string,
+): Promise<QueryResultRow[]> {
   const queryResult = await sql`
   SELECT t.url, t.name, t.type, t.game, t.created_at, COUNT(tp.id) FROM ta_tournaments t
   JOIN ta_auth ta ON host = ta.auth_id
@@ -30,4 +34,23 @@ export async function getUserTournaments(user: string) {
   GROUP BY t.url, t.name, t.type, t.game, t.created_at
   `
   return queryResult.rows
+}
+
+export async function getUserById(id: string): Promise<QueryResultRow> {
+  const queryResult = await sql`SELECT * FROM ta_auth WHERE auth_id = ${id}`
+  return queryResult.rows?.[0]
+}
+
+export async function getProfilePictureURL(): Promise<
+  QueryResultRow[string] | null
+> {
+  try {
+    const session = await getSession()
+    const authID = session?.user?.authID
+    const profileURL =
+      await sql`SELECT picture_url FROM ta_auth WHERE auth_id = ${authID}`
+    return profileURL?.rows?.[0]?.picture_url
+  } catch (error) {
+    return null
+  }
 }

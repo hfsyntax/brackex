@@ -1,8 +1,12 @@
-import { getUserTournaments } from "@/actions/serverRequests"
+import {
+  getUserTournaments,
+  getProfilePictureURL,
+} from "@/actions/serverRequests"
 import { getSession } from "@/lib/session"
 import Link from "next/link"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUsers } from "@fortawesome/free-solid-svg-icons"
+import Image from "next/image"
 
 export const metadata = {
   title: "Brackex - Your Tournaments",
@@ -13,7 +17,7 @@ export default async function Dashboard() {
   const session = await getSession()
   const username = session?.user?.username
   const userTournaments = await getUserTournaments(username)
-  console.log(userTournaments)
+  const profilePictureURL = await getProfilePictureURL()
   return (
     <div className="flex">
       <div className="ml-3 mt-5 h-fit w-fit border-r-2 pb-3 pt-3">
@@ -64,7 +68,13 @@ export default async function Dashboard() {
               className="mt-3 flex w-full items-center bg-slate-700 text-white hover:bg-slate-600"
               key={index}
             >
-              <div className="m-3 h-[50px] w-[50px] bg-white"></div>
+              <Image
+                src={profilePictureURL}
+                alt="profile_picture"
+                className="m-3"
+                height={50}
+                width={50}
+              />
               <div className="grow">
                 <span className="inline-block pl-3">{tournament?.name}</span>
 

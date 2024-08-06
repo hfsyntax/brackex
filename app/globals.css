@@ -57,3 +57,11 @@ input[type="checkbox"] {
   background-color: #fff;
   transform: translateX(-100%);
 }
+
+.translate-center {
+  transform: translate(-50%, -50%);
+}
+
+.bg-img-remove:hover {
+  background-image: none !important;
+}

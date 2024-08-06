@@ -93,6 +93,24 @@ export async function createTournament(
     const queryResult = await sql`
     INSERT INTO ta_tournaments (name, type, created_at, updated_at, game, url, description, host) 
     VALUES (${name}, ${tournamentType}, ${new Date().toISOString()}, ${new Date().toISOString()}, ${game}, ${url}, ${description}, ${session?.user?.authID} )`
-    return { success: "success" }
+    if (queryResult.rows.length > 0) {
+      return { success: `Successfully created tournament ${name}` }
+    } else {
+      return { error: "database insertion error" }
+    }
+  }
+}
+
+export async function updateProfilePictureURL(url: string) {
+  try {
+    const session = await getSession()
+    if (!session) return
+    const authID = session?.user?.authID
+    await sql`UPDATE ta_auth SET picture_url = ${url} WHERE auth_id = ${authID}`
+    revalidatePath("/profile")
+    return { url: url }
+  } catch (error) {
+    revalidatePath("/profile")
+    throw error
   }
 }
