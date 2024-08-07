@@ -4,9 +4,14 @@ import { useEffect, useRef, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons"
 import Link from "next/link"
+import Image from "next/image"
 import { logout } from "@/lib/session"
 
-export default function ProfileDropdown() {
+export default function ProfileDropdown({
+  pictureURL,
+}: {
+  pictureURL: string
+}) {
   const [dropdown, showDropdown] = useState<boolean>(false)
   const currentDropdown = useRef<HTMLDivElement>(null)
   const currentDropdownState = useRef<boolean>(false)
@@ -37,8 +42,15 @@ export default function ProfileDropdown() {
 
   return (
     <>
-      <Link href={"/profile"} className="mr-3">
-        <div className="h-[40px] w-[40px] cursor-pointer rounded-3xl bg-white"></div>
+      <Link href={"/profile"} className="mr-3" draggable={false}>
+        <Image
+          src={pictureURL}
+          alt="profile_picture"
+          height={40}
+          width={40}
+          className="select-none rounded-3xl"
+          draggable={false}
+        />
       </Link>
       <div
         className="absolute right-0 top-full h-fit w-[200px] cursor-default select-none bg-slate-950 pb-2 pt-2"

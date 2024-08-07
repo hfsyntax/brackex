@@ -9,16 +9,14 @@ export default function Communities() {
   return (
     <div className="flex">
       <div className="ml-3 mt-5 h-fit w-fit border-r-2 pb-3 pt-3">
-        <Link href={"/browse/tournaments"}>
+        <Link href={"/browse/tournaments"} draggable={false}>
           <span className="mr-3 block rounded-md p-1 text-3xl text-white hover:bg-gray-700">
             Browse Tournaments
           </span>
         </Link>
-        <Link href={"/browse/communities"}>
-          <span className="mr-3 mt-2 block cursor-default rounded-md bg-gray-500 p-1 text-3xl text-white">
-            Browse Communities
-          </span>
-        </Link>
+        <span className="mr-3 mt-2 block cursor-default select-none rounded-md bg-gray-500 p-1 text-3xl text-white">
+          Browse Communities
+        </span>
       </div>
       <div className="ml-3 grow">
         <h1 className="mt-5 inline-block text-4xl text-white">

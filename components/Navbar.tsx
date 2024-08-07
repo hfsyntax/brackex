@@ -6,8 +6,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import Link from "next/link"
 import ProfileDropdown from "./ProfileDropdown"
+import { getProfilePictureURL } from "@/actions/serverRequests"
 
-export default function Navbar({ session }: { session: any }) {
+export default async function Navbar({ session }: { session: any }) {
+  const pictureURL = await getProfilePictureURL()
   return (
     <nav className="fixed top-0 z-10 flex h-[60px] w-full items-center justify-end bg-gray-900">
       <Link
@@ -29,7 +31,9 @@ export default function Navbar({ session }: { session: any }) {
       </Link>
       {session ? (
         <>
-          <ProfileDropdown />
+          <ProfileDropdown
+            pictureURL={pictureURL ? pictureURL : "/default.png"}
+          />
         </>
       ) : (
         <Link href={"/"} className="mr-3">

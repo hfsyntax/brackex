@@ -29,6 +29,7 @@ export default function Sidebar({
           <Link
             key={index}
             href={`${pathname}/${item.toLowerCase().replace("standings", "").replace(" ", "_")}`}
+            draggable={false}
           >
             <span className="mb-2 mr-3 mt-2 block cursor-pointer rounded-md p-1 text-3xl text-white hover:bg-gray-700">
               {item.replaceAll("../", "")}
